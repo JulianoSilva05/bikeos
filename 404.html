@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada | BikeOS</title>
+    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --cor-primaria: #fbcd00; /* Amarelo vibrante */
+            --cor-fundo-escuro: #1a1a1a;
+            --cor-texto: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--cor-fundo-escuro);
+            color: var(--cor-texto);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+            margin: 0;
+        }
+
+        .container-404 {
+            max-width: 600px;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            width: 280px;
+            border-radius: 12px;
+            border: 4px solid var(--cor-primaria);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--cor-primaria);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--cor-primaria);
+            color: white;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            border: 2px solid var(--cor-primaria);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(251, 205, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-404">
+        <div class="gif-container">
+            <img src="https://assets.sbnation.com/assets/1523749/Bike.gif" alt="Ciclista caindo de forma engraçada">
+        </div>
+
+        <h1>404 - PÁGINA NÃO ENCONTRADA</h1>
+        <p>
+            Vish, essa trilha não existe! Parece que você "bateu o guidão" e veio parar no lugar errado.
+        </p>
+        
+        <a href="index.php" class="btn"><i class="fa-solid fa-arrow-left"></i> Voltar para a Página Inicial</a>
+    </div>
+
+</body>
+</html>
