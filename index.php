@@ -1001,6 +1001,10 @@
                 <i class="fab fa-whatsapp" style="margin-right: 5px;"></i>
                 (31) 98420-4877
             </a></p>
+            <p><strong>Canal:</strong> <a href="https://whatsapp.com/channel/0029VbCcUiZ1Hspwy8LgUc2M" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;" aria-label="Seguir o canal do BikeOS no WhatsApp">
+                <i class="fab fa-whatsapp" style="margin-right: 5px;"></i>
+                Siga o canal do BikeOS no WhatsApp
+            </a></p>
             <address class="sr-only">
                 BikeOS - Sistema de Gestão para Oficinas de Bicicletas<br>
                 Email: contato@bikeos.com.br<br>
