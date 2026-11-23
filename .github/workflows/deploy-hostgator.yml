@@ -1,0 +1,96 @@
+name: Subir para HostGator (FTP)
+
+# Envia arquivos escolhidos para a HostGator por FTP.
+# Disparo manual: GitHub → Actions → "Subir para HostGator (FTP)" → Run workflow.
+#
+# Segredos necessários (GitHub → Settings → Secrets and variables → Actions):
+#   FTP_SERVER     ex.: br1048.hostgator.com.br
+#   FTP_USERNAME   usuário FTP
+#   FTP_PASSWORD   senha FTP
+# Variável opcional (aba Variables):
+#   FTP_REMOTE_DIR pasta do site no FTP, relativa à raiz da conta FTP (padrão: vazio = raiz)
+
+on:
+  workflow_dispatch:
+    inputs:
+      arquivos:
+        description: "Arquivos a enviar, separados por espaço (ex.: index.php promocao.php)"
+        required: true
+        type: string
+      ref:
+        description: "Branch ou commit de onde pegar os arquivos"
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-hostgator
+  cancel-in-progress: false
+
+jobs:
+  subir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Validar lista de arquivos
+        env:
+          ARQUIVOS: ${{ inputs.arquivos }}
+        run: |
+          set -euo pipefail
+          for f in $ARQUIVOS; do
+            case "$f" in
+              /*|*..*) echo "::error::Caminho inválido: $f"; exit 1 ;;
+              .env|.env.*|*/.env|config.local.php|*.sql|.git/*|.github/*)
+                echo "::error::Arquivo proibido de enviar: $f"; exit 1 ;;
+            esac
+            [ -f "$f" ] || { echo "::error::Arquivo não existe no ref: $f"; exit 1; }
+          done
+
+      - name: Backup dos arquivos que estão no servidor
+        env:
+          ARQUIVOS: ${{ inputs.arquivos }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ vars.FTP_REMOTE_DIR }}
+        run: |
+          set -uo pipefail
+          mkdir -p backup
+          base="ftp://${FTP_SERVER}/${FTP_REMOTE_DIR:+${FTP_REMOTE_DIR%/}/}"
+          for f in $ARQUIVOS; do
+            mkdir -p "backup/$(dirname "$f")"
+            if curl -sS --ssl --user "${FTP_USERNAME}:${FTP_PASSWORD}" "${base}${f}" -o "backup/$f"; then
+              echo "Backup feito: $f"
+            else
+              echo "Sem versão anterior no servidor (arquivo novo): $f"; rm -f "backup/$f"
+            fi
+          done
+
+      - name: Guardar backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: backup-servidor-${{ github.run_number }}
+          path: backup/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Enviar por FTP
+        env:
+          ARQUIVOS: ${{ inputs.arquivos }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ vars.FTP_REMOTE_DIR }}
+        run: |
+          set -euo pipefail
+          base="ftp://${FTP_SERVER}/${FTP_REMOTE_DIR:+${FTP_REMOTE_DIR%/}/}"
+          for f in $ARQUIVOS; do
+            curl -sS --ssl --ftp-create-dirs --user "${FTP_USERNAME}:${FTP_PASSWORD}" -T "$f" "${base}${f}"
+            echo "Enviado: $f"
+          done
