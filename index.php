@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/promocao.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -818,6 +819,7 @@
                 <li role="none"><a href="#funcionalidades" role="menuitem" aria-label="Ver funcionalidades do sistema">Funcionalidades</a></li>
                 <li role="none"><a href="#preco" role="menuitem" aria-label="Ver preços e planos">Preço</a></li>
                 <li role="none"><a href="#cadastro" role="menuitem" aria-label="Fazer cadastro gratuito">Cadastro</a></li>
+                <?php promocao_render_nav(); ?>
             </ul>
             <a href="login.php" class="btn btn-outline" aria-label="Acessar área de login">Fazer Login</a>
         </nav>
@@ -844,6 +846,8 @@
                 </div>
             </div>
         </section>
+
+        <?php promocao_render_secao(); ?>
 
         <section id="funcionalidades" class="features" role="main">
             <div class="container">
