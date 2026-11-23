@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/promocao.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -818,6 +819,7 @@
                 <li role="none"><a href="#funcionalidades" role="menuitem" aria-label="Ver funcionalidades do sistema">Funcionalidades</a></li>
                 <li role="none"><a href="#preco" role="menuitem" aria-label="Ver preços e planos">Preço</a></li>
                 <li role="none"><a href="#cadastro" role="menuitem" aria-label="Fazer cadastro gratuito">Cadastro</a></li>
+                <?php promocao_render_nav(); ?>
             </ul>
             <a href="login.php" class="btn btn-outline" aria-label="Acessar área de login">Fazer Login</a>
         </nav>
@@ -844,6 +846,8 @@
                 </div>
             </div>
         </section>
+
+        <?php promocao_render_secao(); ?>
 
         <section id="funcionalidades" class="features" role="main">
             <div class="container">
@@ -996,6 +1000,10 @@
             <p><strong>WhatsApp:</strong> <a href="https://wa.me/5531984204877" target="_blank" style="color: var(--primary-color); text-decoration: none;" aria-label="Entrar em contato via WhatsApp">
                 <i class="fab fa-whatsapp" style="margin-right: 5px;"></i>
                 (31) 98420-4877
+            </a></p>
+            <p><strong>Canal:</strong> <a href="https://whatsapp.com/channel/0029VbCcUiZ1Hspwy8LgUc2M" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;" aria-label="Seguir o canal do BikeOS no WhatsApp">
+                <i class="fab fa-whatsapp" style="margin-right: 5px;"></i>
+                Siga o canal do BikeOS no WhatsApp
             </a></p>
             <address class="sr-only">
                 BikeOS - Sistema de Gestão para Oficinas de Bicicletas<br>

@@ -18,7 +18,21 @@ try {
     $user = EnvLoader::get('DB_USER', 'root');
     $pass = EnvLoader::get('DB_PASS', '');
     $charset = EnvLoader::get('DB_CHARSET', 'utf8mb4');
-    
+
+    // Configuração local: se existir config.local.php (só no PC de desenvolvimento),
+    // os valores dele substituem os do .env. No servidor esse arquivo não existe.
+    $configLocal = __DIR__ . '/config.local.php';
+    if (is_file($configLocal)) {
+        $local = require $configLocal;
+        if (is_array($local)) {
+            $host    = $local['DB_HOST']    ?? $host;
+            $dbname  = $local['DB_NAME']    ?? $dbname;
+            $user    = $local['DB_USER']    ?? $user;
+            $pass    = $local['DB_PASS']    ?? $pass;
+            $charset = $local['DB_CHARSET'] ?? $charset;
+        }
+    }
+
     $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
     
     $options = [

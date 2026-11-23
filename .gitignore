@@ -1,0 +1,7 @@
+# Configuração local (dados do banco do PC de desenvolvimento)
+config.local.php
+.mp-integrate-progress.md
+
+# Segredos (senhas do banco, e-mail e Mercado Pago) - nunca enviar ao GitHub
+.env
+.env.production
