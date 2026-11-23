@@ -39,7 +39,7 @@ if ($metodo === 'POST') {
 }
 
 // E-mail e nível vêm do cadastro do usuário logado, nunca do navegador
-$stmt = $pdo->prepare('SELECT email, nivel FROM usuarios WHERE id = ? AND ativo = 1');
+$stmt = $pdo->prepare("SELECT email, tipo FROM usuarios WHERE id = ? AND status = 'ATIVO'");
 $stmt->execute([$userId]);
 $usuario = $stmt->fetch();
 if (!$usuario) {
@@ -123,7 +123,7 @@ try {
 
     // ---------- Pausar / reativar / cancelar (somente admin) ----------
     if ($acao === 'ciclo' && $metodo === 'POST') {
-        if ($usuario['nivel'] !== 'admin') {
+        if ($usuario['tipo'] !== 'ADMIN') {
             responder(403, ['erro' => 'sem_permissao', 'mensagem' => 'Somente administradores podem alterar a assinatura.']);
         }
         $entrada = json_decode(file_get_contents('php://input'), true) ?: [];
